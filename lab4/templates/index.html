@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Products</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<header>Product Manager</header>
+
+<div class="container">
+    <a href="/create" class="button">Add product</a>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Model</th>
+            <th>Company</th>
+            <th>Price</th>
+            <th></th>
+        </tr>
+
+        {{range .}}
+        <tr>
+            <td>{{.ID}}</td>
+            <td>{{.Model}}</td>
+            <td>{{.Company}}</td>
+            <td>{{.Price}}</td>
+            <td><a href="/delete?id={{.ID}}" class="button" style="background:#c0392b;">Delete</a></td>
+        </tr>
+        {{end}}
+    </table>
+</div>
+
+</body>
+</html>

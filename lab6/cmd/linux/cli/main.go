@@ -4,16 +4,17 @@ import (
     "os"
 
     "github.com/andrejkoleshko/VSRPP-LAB/lab6/internal/pkg/app/cli"
+    "github.com/andrejkoleshko/VSRPP-LAB/lab6/pkg/logger"
 )
 
 func main() {
-    log := cli.NewLogger()
-    app := cli.New(log)
+    l := logger.New()
+    app := cli.New(l)
 
     if err := app.Run(); err != nil {
-        log.Error("Критическая ошибка выполнения: " + err.Error())
+        l.Error("Критическая ошибка выполнения", err)
         os.Exit(1)
     }
 
-    log.Info("Программа завершена без ошибок")
+    l.Info("Программа завершена без ошибок")
 }

@@ -14,14 +14,20 @@ type Provider struct {
     Type string `yaml:"type"`
 }
 
+type Cache struct {
+    Type string `yaml:"type"`
+    Addr string `yaml:"addr"`
+}
+
 type Location struct {
     Lat  float64 `yaml:"lat"`
     Long float64 `yaml:"long"`
 }
 
 type Config struct {
-    P Provider `yaml:"provider"`
-    L Location `yaml:"location"`
+    P     Provider `yaml:"provider"`
+    Cache Cache    `yaml:"cache"`
+    L     Location `yaml:"location"`
 }
 
 func Parse(r io.Reader) (Config, error) {

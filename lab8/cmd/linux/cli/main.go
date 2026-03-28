@@ -3,6 +3,7 @@ package main
 import (
     "os"
 
+    "github.com/andrejkoleshko/VSRPP-LAB/lab8/internal/adapters/cache"
     "github.com/andrejkoleshko/VSRPP-LAB/lab8/internal/adapters/weather"
     "github.com/andrejkoleshko/VSRPP-LAB/lab8/internal/pkg/app/cli"
     "github.com/andrejkoleshko/VSRPP-LAB/lab8/internal/pkg/flags"
@@ -25,8 +26,9 @@ func main() {
 
     l := logger.New()
     wi := getProvider(cfg, l)
+    cacheProvider := getCache(cfg, l)
 
-    app := cli.New(l, wi, cfg)
+    app := cli.New(l, wi, cacheProvider, cfg)
 
     if err := app.Run(); err != nil {
         l.Error("Критическая ошибка выполнения", err)
@@ -42,5 +44,14 @@ func getProvider(c config.Config, l cli.Logger) cli.WeatherInfo {
         return weather.New(l)
     default:
         return weather.New(l)
+    }
+}
+
+func getCache(c config.Config, l cli.Logger) cli.Cache {
+    switch c.Cache.Type {
+    case "redis":
+        return cache.NewRedisCache(c.Cache.Addr)
+    default:
+        return cache.NewFileCache("./cache.json")
     }
 }

@@ -17,17 +17,24 @@ type WeatherInfo interface {
     GetTemperature(float64, float64) models.TempInfo
 }
 
-type cliApp struct {
-    l  Logger
-    wi WeatherInfo
-    c  config.Config
+type Cache interface {
+    Get(key string) (float32, bool)
+    Set(key string, value float32) error
 }
 
-func New(l Logger, wi WeatherInfo, c config.Config) *cliApp {
+type cliApp struct {
+    l     Logger
+    wi    WeatherInfo
+    cache Cache
+    c     config.Config
+}
+
+func New(l Logger, wi WeatherInfo, cache Cache, c config.Config) *cliApp {
     return &cliApp{
-        l:  l,
-        wi: wi,
-        c:  c,
+        l:     l,
+        wi:    wi,
+        cache: cache,
+        c:     c,
     }
 }
 
@@ -37,11 +44,17 @@ func (c *cliApp) Run() error {
     lat := c.c.L.Lat
     long := c.c.L.Long
 
-    c.l.Debug(fmt.Sprintf("Координаты из конфига: %.4f, %.4f", lat, long))
+    key := fmt.Sprintf("%.4f:%.4f", lat, long)
+
+    if temp, ok := c.cache.Get(key); ok {
+        c.l.Info("Температура взята из кэша")
+        fmt.Printf("🌤 Температура сейчас: %.2f°C\n", temp)
+        return nil
+    }
 
     temp := c.wi.GetTemperature(lat, long).Temp
+    c.cache.Set(key, temp)
 
     fmt.Printf("🌤 Температура сейчас: %.2f°C\n", temp)
-
     return nil
 }

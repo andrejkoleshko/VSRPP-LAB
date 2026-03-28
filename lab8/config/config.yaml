@@ -1,6 +1,9 @@
 service:
   provider:
     type: open-meteo
+  cache:
+    type: redis
+    addr: "localhost:6379"
   location:
-    lat: 53.6688
-    long: 23.8223
+    lat: 53.6694
+    long: 23.8131

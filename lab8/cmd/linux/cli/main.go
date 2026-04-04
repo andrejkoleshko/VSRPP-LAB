@@ -3,6 +3,7 @@ package main
 import (
     "os"
 
+    "github.com/andrejkoleshko/VSRPP-LAB/lab8/internal/adapters/cache"
     "github.com/andrejkoleshko/VSRPP-LAB/lab8/internal/adapters/weather"
     "github.com/andrejkoleshko/VSRPP-LAB/lab8/internal/pkg/app/cli"
     "github.com/andrejkoleshko/VSRPP-LAB/lab8/internal/pkg/flags"
@@ -26,7 +27,11 @@ func main() {
     l := logger.New()
     wi := getProvider(cfg, l)
 
-    app := cli.New(l, wi, cfg)
+    // 🔥 Redis адрес захардкожен, так как в конфиге его нет
+    cacheProvider := cache.NewRedisCache("localhost:6379")
+
+    // 🔥 передаём 4 аргумента
+    app := cli.New(l, wi, cacheProvider, cfg)
 
     if err := app.Run(); err != nil {
         l.Error("Критическая ошибка выполнения", err)

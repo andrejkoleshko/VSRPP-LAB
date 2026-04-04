@@ -19,15 +19,21 @@ type Location struct {
     Long float64 `yaml:"long"`
 }
 
+type CacheConfig struct {
+    Type string `yaml:"type"`
+    Addr string `yaml:"addr"`
+}
+
 type Config struct {
-    P Provider `yaml:"provider"`
-    L Location `yaml:"location"`
+    P     Provider    `yaml:"provider"`
+    L     Location    `yaml:"location"`
+    Cache CacheConfig `yaml:"cache"`
 }
 
 func Parse(r io.Reader) (Config, error) {
-    var c ConfigFile
-    if err := yaml.NewDecoder(r).Decode(&c); err != nil {
+    var cf ConfigFile
+    if err := yaml.NewDecoder(r).Decode(&cf); err != nil {
         return Config{}, err
     }
-    return c.C, nil
+    return cf.C, nil
 }

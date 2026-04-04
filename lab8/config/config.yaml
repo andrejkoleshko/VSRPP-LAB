@@ -4,3 +4,6 @@ service:
   location:
     lat: 53.6688
     long: 23.8223
+
+cache:
+  addr: "localhost:6379"

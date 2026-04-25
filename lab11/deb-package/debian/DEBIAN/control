@@ -1,0 +1,7 @@
+Package: weather-gui
+Version: 1.0
+Section: utils
+Priority: optional
+Architecture: amd64
+Maintainer: Андрей
+Description: Weather GUI informer built with Go and Fyne

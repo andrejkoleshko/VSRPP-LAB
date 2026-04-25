@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Weather GUI
+Comment=Weather informer built with Go and Fyne
+Exec=/usr/local/bin/weather-gui
+Icon=weather
+Terminal=false
+Type=Application
+Categories=Utility;
+Path=/usr/local/share/weather-gui
+StartupNotify=true

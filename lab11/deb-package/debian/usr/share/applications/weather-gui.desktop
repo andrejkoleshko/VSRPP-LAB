@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Weather GUI
-Comment=Weather informer built with Go and Fyne
+Comment=Weather informer built with  Go and  Fyne
 Exec=/usr/local/bin/weather-gui
 Icon=weather
 Terminal=false

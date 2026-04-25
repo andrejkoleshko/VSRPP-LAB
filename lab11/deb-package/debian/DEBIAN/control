@@ -3,5 +3,5 @@ Version: 1.0
 Section: utils
 Priority: optional
 Architecture: amd64
-Maintainer: Андрей
+Maintainer: Андрей Колешко
 Description: Weather GUI informer built with Go and Fyne
